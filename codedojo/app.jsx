@@ -1,12 +1,45 @@
-function Hero(props) {
-	return (
-		<div className="container">
-			<img src={props.imageUrl} />
-			<h1>{props.title}</h1>
-			<p>{props.subtitle}</p>
-		</div>
-	);
-}
+// function Hero(props) {
+// 	var count = 0;
+// 	function handleClick() {
+// 		count += 1;
+// 		console.log(count);
+// 	}
+// }
+
+var Hero = React.createClass({
+	getInitialState: function() {
+		return {
+			count: 0,
+			byten: 0
+		};
+	},
+
+	handleClick: function() {
+		this.setState({
+			count: this.state.count + 1 
+		});
+
+		console.log(this.state.count);
+
+		if(this.state.count === 10){
+			this.setState({
+				byten: this.state.byten + 1
+			})
+		}
+	},
+
+	render: function() {
+		return (
+			<div className="container">
+				<div className="count">{this.state.count}</div>
+				<div className="tencount">{this.state.byten}</div>
+				<img src={this.props.imageUrl} onClick={this.handleClick} />
+				<h1>{this.props.title}</h1>
+				<p>{this.props.subtitle}</p>
+			</div>
+		);
+	},
+});
 
 ReactDOM.render(
 	<div>
