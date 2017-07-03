@@ -8,7 +8,7 @@ function updateState(state, action) {
   }
 }
 
-class Store {
+export default class Store {
   constructor(updateState, state) {
     this._updateState = updateState;
     this._state = state;
@@ -30,15 +30,3 @@ class Store {
       (this._callbacks = this._callbacks.filter(cb => cb !== callback));
   }
 }
-
-const initialState = { count: 0 };
-
-const store = new Store(updateState, initialState);
-
-const incrementAction = { type: 'INCREMENT', amount: 5 };
-const decrementAction = { type: 'DECREMENT', amount: 3 };
-
-store.subscribe(() => console.log('state changed', store.state));
-
-store.update(incrementAction);
-store.update(decrementAction);
