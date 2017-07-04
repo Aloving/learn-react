@@ -40,7 +40,7 @@ class App extends Component {
 	render() {
 		return (
 			<main>
-				<Header title={this.props.title} />
+				<Header title={this.props.title} todos={this.state.todos}/>
 				<section className="todo-list">
 					{this.state.todos.map(todo =>
 						<Todo
