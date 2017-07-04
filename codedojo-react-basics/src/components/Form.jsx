@@ -13,14 +13,18 @@ class Form extends Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
+		let title = this.refs.title.value;
 
-		console.log(event);
+		if(title){
+			this.props.onAdd(title);
+			this.refs.title.value = '';
+		}
 	}
 
 	render() {
 		return (
 			<form className="todo-form" onSubmit={this.handleSubmit}>
-				<input type="text" placeholder="Что нужно сделать?" />
+				<input type="text" placeholder="Что нужно сделать?" ref="title"/>
 
 				<Button type="submit"> Добавить </Button>
 			</form>
@@ -28,6 +32,8 @@ class Form extends Component {
 	}
 }
 
-Form.propTypes = {};
+Form.propTypes = {
+	onAdd: React.PropTypes.func.isRequired
+};
 
 export default Form;
