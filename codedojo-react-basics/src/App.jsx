@@ -19,11 +19,12 @@ class App extends Component {
 		this.handleStatusChange = this.handleStatusChange.bind(this);
 		this.handleAdd = this.handleAdd.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
+		this.handleEdit = this.handleEdit.bind(this);
 	}
 
-	nextId(){
+	nextId() {
 		this._nextId = this._nextId || 4;
-		return this._nextId ++;
+		return this._nextId++;
 	}
 
 	handleStatusChange(id) {
@@ -39,13 +40,25 @@ class App extends Component {
 	}
 
 	handleAdd(title) {
-		let todo = { 
+		let todo = {
 			id: this.nextId(),
 			title,
-			completed: false
+			completed: false,
 		};
 
 		let todos = [...this.state.todos, todo];
+
+		this.setState({ todos });
+	}
+
+	handleEdit(id, title) {
+		let todos = this.state.todos.map(todo => {
+			if (todo.id === id) {
+				todo.title = title;
+			}
+
+			return todo;
+		});
 
 		this.setState({ todos });
 	}
@@ -69,6 +82,7 @@ class App extends Component {
 							id={todo.id}
 							onStatusChange={this.handleStatusChange}
 							onDelete={this.handleDelete}
+							onEdit={this.handleEdit}
 						/>
 					)}
 

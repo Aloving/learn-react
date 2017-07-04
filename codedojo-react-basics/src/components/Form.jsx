@@ -20,7 +20,7 @@ class Form extends Component {
 
 		if (title) {
 			this.props.onAdd(title);
-			this.refs.title.value = '';
+			this.setState({});
 		}
 	}
 
