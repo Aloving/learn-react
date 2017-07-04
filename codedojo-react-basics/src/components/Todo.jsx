@@ -8,7 +8,7 @@ function Todo(props) {
 	return (
 		<div className={`todo ${props.completed ? 'completed' : ''}`}>
 
-			<Checkbox checked={props.completed} />
+			<Checkbox />
 
 			<span className="todo-title">{props.title}</span>
 
