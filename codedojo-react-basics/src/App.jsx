@@ -1,38 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+// components
+import Header from './components/Header';
+import Todo from './components/Todo';
+
 function App(props) {
 	return (
 		<main>
-			<header>
-				<h1>{props.title}</h1>
-			</header>
+			<Header title={props.title} />
 			<section className="todo-list">
-				<div className="todo">
-
-					<button className="checkbox icon">
-						<i className="material-icons">check_box_outline_blank</i>
-					</button>					
-
-					<span className="todo-title">
-						Изучить реакт
-					</span>
-
-					<button className="checkbox icon">
-						<i className="material-icons">delete</i>
-					</button>
-				</div>
+				<Todo title={"Изучить javascript"} completed={true}/>
+				<Todo title={"Изучить React"} completed={false}/>
 			</section>
 		</main>
 	);
 }
 
 App.propTypes = {
-	title: React.PropTypes.string
+	title: React.PropTypes.string,
 };
 
 App.defaultProps = {
-	title: 'React TODO'
+	title: 'React TODO',
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
