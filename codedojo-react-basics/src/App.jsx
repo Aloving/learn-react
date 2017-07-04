@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import todos from './todos';
@@ -7,23 +7,33 @@ import todos from './todos';
 import Header from './components/Header';
 import Todo from './components/Todo';
 
-function App(props) {
-	return (
-		<main>
-			<Header title={props.title} />
-			<section className="todo-list">
-				{props.todos.map(todo =>
-					<Todo title={todo.title} completed={todo.completed} key={todo.id}/>
-				)}
+class App extends Component {
+	constructor(props) {
+		super(props);
 
-			</section>
-		</main>
-	);
+		this.state = {
+			todos: this.props.initialData,
+		};
+	}
+
+	render() {
+		return (
+			<main>
+				<Header title={this.props.title} />
+				<section className="todo-list">
+					{this.state.todos.map(todo =>
+						<Todo title={todo.title} completed={todo.completed} key={todo.id} />
+					)}
+
+				</section>
+			</main>
+		);
+	}
 }
 
 App.propTypes = {
 	title: React.PropTypes.string,
-	todos: React.PropTypes.arrayOf(
+	initialData: React.PropTypes.arrayOf(
 		React.PropTypes.shape({
 			id: React.PropTypes.number.isRequired,
 			title: React.PropTypes.string.isRequired,
@@ -36,4 +46,4 @@ App.defaultProps = {
 	title: 'React TODO',
 };
 
-ReactDOM.render(<App todos={todos} />, document.getElementById('root'));
+ReactDOM.render(<App initialData={todos} />, document.getElementById('root'));
