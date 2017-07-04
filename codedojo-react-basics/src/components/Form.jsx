@@ -7,11 +7,19 @@ class Form extends Component {
 		super(props);
 
 		this.state = {};
+
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
+
+		console.log(event);
 	}
 
 	render() {
 		return (
-			<form className="todo-form">
+			<form className="todo-form" onSubmit={this.handleSubmit}>
 				<input type="text" placeholder="Что нужно сделать?" />
 
 				<Button type="submit"> Добавить </Button>
@@ -20,8 +28,6 @@ class Form extends Component {
 	}
 }
 
-Form.propTypes = {
-
-};
+Form.propTypes = {};
 
 export default Form;
