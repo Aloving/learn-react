@@ -6,6 +6,7 @@ import todos from './todos';
 // components
 import Header from './components/Header';
 import Todo from './components/Todo';
+import Form from './components/Form';
 
 class App extends Component {
 	constructor(props) {
@@ -54,6 +55,8 @@ class App extends Component {
 					)}
 
 				</section>
+
+				<Form />
 			</main>
 		);
 	}
