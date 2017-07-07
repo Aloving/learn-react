@@ -15,6 +15,13 @@ class Todo extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	componentDidUpdate() {
+		if(this.state.editing){
+			this.refs.title.focus();
+			this.refs.title.select();
+		}
+	}
+
 	renderDisplay() {
 		return (
 			<div className={`todo ${this.props.completed ? 'completed' : ''}`}>
@@ -66,7 +73,7 @@ Todo.propTypes = {
 	completed: React.PropTypes.bool.isRequired,
 	onStatusChange: React.PropTypes.func.isRequired,
 	onDelete: React.PropTypes.func.isRequired,
-	onEdit: React.PropTypes.func.isRequired
+	onEdit: React.PropTypes.func.isRequired,
 };
 
 export default Todo;
