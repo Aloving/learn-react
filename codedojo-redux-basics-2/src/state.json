@@ -1,4 +1,5 @@
-[
+{
+  "todos": [
     {
         "id": 1,
         "title": "Изучить JavaScript",
@@ -19,4 +20,6 @@
         "title": "Написать приложение",
         "completed": false
     }
-]
+  ],
+  "filter": "ALL"
+}
