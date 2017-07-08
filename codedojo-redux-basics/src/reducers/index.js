@@ -1,15 +1,36 @@
 import { ADD_TODO, DELETE_TODO, TOGGLE_TODO, EDIT_TODO } from '../actions';
 
-function reducer(state = [], action) {
+function todoReducer(state = {}, action) {
   switch (action.type) {
     case ADD_TODO:
-      const todo = {
+      return {
         id: action.id,
         title: action.title,
         completed: false,
       };
+    case ADD_TODO:
+      if (state.id !== action.id) {
+        return todo;
+      }
 
-      return (todos = [...state, todo]);
+      return Object.assign({}, todo, {
+        completed: !todo.completed,
+      });
+    case EDIT_TODO:
+      if (state.id !== action.id) {
+        return todo;
+      }
+
+      return Object.assign({}, todo, {
+        title: action.title,
+      });
+  }
+}
+
+function reducer(state = [], action) {
+  switch (action.type) {
+    case ADD_TODO:
+      return (todos = [...state, todoReducer(undefined, action)]);
     case DELETE_TODO:
       const index = state.findIndex(todo => todo.id === action.id);
       return (todos = [
@@ -17,25 +38,9 @@ function reducer(state = [], action) {
         ...this.todos.slice(index + 1),
       ]);
     case TOGGLE_TODO:
-      return (todos = state.map(todo => {
-        if (todo.id !== action.id) {
-          return todo;
-        }
-
-        return Object.assign({}, todo, {
-          completed: !todo.completed,
-        });
-      }));
+      return (todos = state.map(todo => todoReducer(todo, action)));
     case EDIT_TODO:
-      return (todos = state.map(todo => {
-        if (todo.id !== action.id) {
-          return todo;
-        }
-
-        return Object.assign({}, todo, {
-          title: action.title,
-        });
-      }));
+      return (todos = state.map(todo => todoReducer(todo, action)));
     default:
       return state;
   }
