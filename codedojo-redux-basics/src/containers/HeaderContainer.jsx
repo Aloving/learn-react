@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 
 class HeaderContainer extends Component {
-	constructor(props) {
-		super(props);
+	constructor(props, context) {
+		super(props, context);
 
-		this.store = this.props.store;
+		this.store = this.context.store;
 	}
 
 	componentDidMount() {
@@ -23,5 +23,9 @@ class HeaderContainer extends Component {
 		return <Header todos={todos} />;
 	}
 }
+
+HeaderContainer.contextTypes = {
+	store: React.PropTypes.ojbect,
+};
 
 export default HeaderContainer;

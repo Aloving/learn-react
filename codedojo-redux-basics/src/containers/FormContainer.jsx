@@ -4,10 +4,10 @@ import Form from '../components/form';
 import { addTodo } from '../actions';
 
 class FormContainer extends Component {
-	constructor(props) {
-		super(props);
+	constructor(props, context) {
+		super(props, context);
 
-		this.store = this.props.store;
+		this.store = this.context.store;
 
 		this.handleAdd = this.handleAdd.bind(this);
 	}
@@ -20,5 +20,9 @@ class FormContainer extends Component {
 		return <Form onAdd={this.handleAdd} />;
 	}
 }
+
+FormContainer.contextTypes = {
+	store: React.PropTypes.ojbect,
+};
 
 export default FormContainer;

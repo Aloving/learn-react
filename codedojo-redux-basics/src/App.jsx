@@ -7,9 +7,9 @@ import FormContainer from './containers/FormContainer';
 function App({ store }) {
   return (
     <main>
-      <HeaderContainer store={store} />
-      <ListContainer store={store} />
-      <FormContainer store={store} />
+      <HeaderContainer />
+      <ListContainer />
+      <FormContainer />
     </main>
   );
 }
