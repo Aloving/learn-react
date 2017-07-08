@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Card({ book }) {
   return (
@@ -20,12 +21,12 @@ function Card({ book }) {
       </div>
 
       <section className="mdc-card__actions">
-        <a
-          href={`/books/${book.topic}/${book.slug}`}
+        <Link
+          to={`/books/${book.topic}/${book.slug}`}
           className="mdc-button mdc-card__action"
         >
           Подробнее
-        </a>
+        </Link>
       </section>
     </div>
   );

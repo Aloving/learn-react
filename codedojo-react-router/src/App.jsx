@@ -7,10 +7,16 @@ import SideNav from './components/Sidenav';
 import Home from './pages/Home';
 import About from './pages/About';
 import Books from './pages/Books';
+import Book from './pages/Book';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this;
+  }
   render() {
     return (
       <Router>
@@ -18,11 +24,22 @@ class App extends Component {
           <Toolbar />
 
           <Content>
-            <Route path="/books" component={SideNav} />
+            <Route
+              path="/books"
+              render={() => <SideNav topics={this.props.topics} />}
+            />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/about" component={About} />
-              <Route path="/books" component={Books} />
+              <Route
+                exact
+                path="/books/:topic?"
+                render={props => <Books books={this.props.books} {...props} />}
+              />
+              <Route
+                path="/books/:topic/:book"
+                render={props => <Book books={this.props.books} {...props} />}
+              />
               <Route path="/login" component={Login} />
               <Route component={NotFound} />
             </Switch>
