@@ -2,6 +2,8 @@ import React from 'react';
 
 import Button from './Button';
 
+import { addTodo } from '../actions';
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
@@ -9,6 +11,8 @@ class Form extends React.Component {
     this.state = {
       title: '',
     };
+
+    this.store = this.props.store;
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,7 +24,7 @@ class Form extends React.Component {
     const title = this.state.title;
 
     if (title) {
-      this.props.onAdd(title);
+      this.store.dispatch(addTodo(title));
       this.setState({ title: '' });
     }
   }
