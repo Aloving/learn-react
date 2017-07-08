@@ -16,21 +16,21 @@ export function addTodo(title) {
 export function deleteTodo(id) {
   return {
     type: DELETE_TODO,
-    id
-  }
+    id,
+  };
 }
 
-export function toggleTodo(id){
+export function toggleTodo(id) {
   return {
     type: TOGGLE_TODO,
-    id
-  }
+    id,
+  };
 }
 
-export function editTodo(id, title){
+export function editTodo(id, title) {
   return {
     type: EDIT_TODO,
     id,
-    title
-  }
+    title,
+  };
 }

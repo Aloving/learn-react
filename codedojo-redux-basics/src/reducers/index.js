@@ -8,20 +8,20 @@ function todoReducer(state = {}, action) {
         title: action.title,
         completed: false,
       };
-    case ADD_TODO:
+    case TOGGLE_TODO:
       if (state.id !== action.id) {
-        return todo;
+        return state;
       }
 
-      return Object.assign({}, todo, {
-        completed: !todo.completed,
+      return Object.assign({}, state, {
+        completed: !state.completed,
       });
     case EDIT_TODO:
       if (state.id !== action.id) {
-        return todo;
+        return state;
       }
 
-      return Object.assign({}, todo, {
+      return Object.assign({}, state, {
         title: action.title,
       });
   }
@@ -30,17 +30,18 @@ function todoReducer(state = {}, action) {
 function reducer(state = [], action) {
   switch (action.type) {
     case ADD_TODO:
-      return (todos = [...state, todoReducer(undefined, action)]);
+      return [...state, todoReducer(undefined, action)];
+
     case DELETE_TODO:
       const index = state.findIndex(todo => todo.id === action.id);
-      return (todos = [
-        ...state.slice(0, index),
-        ...this.todos.slice(index + 1),
-      ]);
+      return [...state.slice(0, index), ...state.slice(index + 1)];
+
     case TOGGLE_TODO:
-      return (todos = state.map(todo => todoReducer(todo, action)));
+      return state.map(todo => todoReducer(todo, action));
+
     case EDIT_TODO:
-      return (todos = state.map(todo => todoReducer(todo, action)));
+      return state.map(todo => todoReducer(todo, action));
+
     default:
       return state;
   }
