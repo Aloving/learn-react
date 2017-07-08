@@ -3,87 +3,95 @@ import React from 'react';
 import Button from './Button';
 
 class Stopwatch extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            running: false,
-            elapsed: 0,
-            lastTick: 0
-        };
+    this.state = {
+      running: false,
+      elapsed: 0,
+      lastTick: 0,
+    };
 
-        this.handleStart = this.handleStart.bind(this);
-        this.handlePause = this.handlePause.bind(this);
-        this.handleStop = this.handleStop.bind(this);
-        this.tick = this.tick.bind(this);
+    this.handleStart = this.handleStart.bind(this);
+    this.handlePause = this.handlePause.bind(this);
+    this.handleStop = this.handleStop.bind(this);
+    this.tick = this.tick.bind(this);
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(this.tick, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  tick() {
+    if (this.state.running) {
+      const now = Date.now();
+      const diff = now - this.state.lastTick;
+
+      this.setState({
+        elapsed: this.state.elapsed + diff,
+        lastTick: now,
+      });
     }
+  }
 
-    componentDidMount() {
-        this.interval = setInterval(this.tick, 1000);
-    }
+  handleStart() {
+    this.setState({
+      running: true,
+      lastTick: Date.now(),
+    });
+  }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
+  handlePause() {
+    this.setState({ running: false });
+  }
 
-    tick() {
-        if (this.state.running) {
-            const now = Date.now();
-            const diff = now - this.state.lastTick;
+  handleStop() {
+    this.setState({
+      running: false,
+      elapsed: 0,
+      lastTick: 0,
+    });
+  }
 
-            this.setState({
-                elapsed: this.state.elapsed + diff,
-                lastTick: now
-            });
-        }
-    }
+  format(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
 
-    handleStart() {
-        this.setState({
-            running: true,
-            lastTick: Date.now()
-        });
-    }
+    return `${minutes > 9 ? minutes : '0' + minutes}:${seconds > 9
+      ? seconds
+      : '0' + seconds}`;
+  }
 
-    handlePause() {
-        this.setState({ running: false });
-    }
+  render() {
+    const time = this.format(this.state.elapsed);
 
-    handleStop() {
-        this.setState({
-            running: false,
-            elapsed: 0,
-            lastTick: 0
-        });
-    }
+    return (
+      <section className="stopwatch">
+        <div className="stopwatch-time">{time}</div>
 
-    format(milliseconds) {
-        const totalSeconds = Math.floor(milliseconds / 1000);
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
+        <div className="stopwatch-controls">
+          {this.state.running
+            ? <Button
+                className="icon"
+                icon="pause"
+                onClick={this.handlePause}
+              />
+            : <Button
+                className="icon"
+                icon="play_arrow"
+                onClick={this.handleStart}
+              />}
 
-        return `${minutes > 9 ? minutes : '0' + minutes}:${seconds > 9 ? seconds : '0' + seconds}`;
-    }
-
-    render() {
-        const time = this.format(this.state.elapsed);
-
-        return (
-            <section className="stopwatch">
-                <div className="stopwatch-time">{time}</div>
-
-                <div className="stopwatch-controls">
-                    {this.state.running ?
-                        <Button className="icon" icon="pause" onClick={this.handlePause} />
-                        :
-                        <Button className="icon" icon="play_arrow" onClick={this.handleStart} />
-                    }
-                    
-                    <Button className="icon" icon="stop" onClick={this.handleStop} />
-                </div>
-            </section>
-        );
-    }
+          <Button className="icon" icon="stop" onClick={this.handleStop} />
+        </div>
+      </section>
+    );
+  }
 }
 
 export default Stopwatch;

@@ -5,101 +5,103 @@ import List from './components/List';
 import Form from './components/Form';
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            todos: this.props.initialData
-        };
+    this.state = {
+      todos: this.props.initialData,
+    };
 
-        this._nextId = this.state.todos.length;
-        
-        this.handleAdd = this.handleAdd.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleToggle = this.handleToggle.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
-    }
+    this._nextId = this.state.todos.length;
 
-    nextId() {
-        return this._nextId += 1;
-    }
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
 
-    handleAdd(title) {
-        const todo = {
-            id: this.nextId(),
-            title,
-            completed: false
-        };
+  nextId() {
+    return (this._nextId += 1);
+  }
 
-        const todos = [...this.state.todos, todo];
+  handleAdd(title) {
+    const todo = {
+      id: this.nextId(),
+      title,
+      completed: false,
+    };
 
-        this.setState({ todos });
-    }
+    const todos = [...this.state.todos, todo];
 
-    handleDelete(id) {
-        const index = this.state.todos.findIndex(todo => todo.id === id);
-        const todos = [
-            ...this.state.todos.slice(0, index),
-            ...this.state.todos.slice(index + 1)
-        ];
-        
-        this.setState({ todos });
-    }
+    this.setState({ todos });
+  }
 
-    handleToggle(id) {
-        const todos = this.state.todos.map(todo => {
-            if (todo.id !== id) {
-                return todo;
-            }
+  handleDelete(id) {
+    const index = this.state.todos.findIndex(todo => todo.id === id);
+    const todos = [
+      ...this.state.todos.slice(0, index),
+      ...this.state.todos.slice(index + 1),
+    ];
 
-            return Object.assign({}, todo, {
-                completed: !todo.completed
-            });
-        });
+    this.setState({ todos });
+  }
 
-        this.setState({ todos });
-    }
+  handleToggle(id) {
+    const todos = this.state.todos.map(todo => {
+      if (todo.id !== id) {
+        return todo;
+      }
 
-    handleEdit(id, title) {
-        const todos = this.state.todos.map(todo => {
-            if (todo.id !== id) {
-                return todo;
-            }
+      return Object.assign({}, todo, {
+        completed: !todo.completed,
+      });
+    });
 
-            return Object.assign({}, todo, {
-                title: title
-            });
-        });
+    this.setState({ todos });
+  }
 
-        this.setState({ todos });
-    }
+  handleEdit(id, title) {
+    const todos = this.state.todos.map(todo => {
+      if (todo.id !== id) {
+        return todo;
+      }
 
-    render() {
-        const todos = this.state.todos;
+      return Object.assign({}, todo, {
+        title: title,
+      });
+    });
 
-        return (
-            <main>
-                <Header todos={todos} />
+    this.setState({ todos });
+  }
 
-                <List
-                    todos={todos}
-                    onDelete={this.handleDelete}
-                    onToggle={this.handleToggle}
-                    onEdit={this.handleEdit}
-                />
+  render() {
+    const todos = this.state.todos;
 
-                <Form onAdd={this.handleAdd} />
-            </main>
-        );
-    }
+    return (
+      <main>
+        <Header todos={todos} />
+
+        <List
+          todos={todos}
+          onDelete={this.handleDelete}
+          onToggle={this.handleToggle}
+          onEdit={this.handleEdit}
+        />
+
+        <Form onAdd={this.handleAdd} />
+      </main>
+    );
+  }
 }
 
 App.propTypes = {
-    initialData: React.PropTypes.arrayOf(React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
-        title: React.PropTypes.string.isRequired,
-        completed: React.PropTypes.bool.isRequired
-    })).isRequired
+  initialData: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      title: React.PropTypes.string.isRequired,
+      completed: React.PropTypes.bool.isRequired,
+    })
+  ).isRequired,
 };
 
 export default App;
