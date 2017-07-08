@@ -50,4 +50,20 @@ function reducer(state = [], action) {
   }
 }
 
+export function getFilteredTodos(state, filter) {
+  switch (filter) {
+    case 'ALL':
+      return state;
+
+    case 'COMPLETED':
+      return state.filter(todo => todo.completed);
+
+    case 'UNCOMPLETED':
+      return state.filter(todo => !todo.completed);
+
+    default:
+      return state;
+  }
+}
+
 export default reducer;
