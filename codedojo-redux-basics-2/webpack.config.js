@@ -7,7 +7,7 @@ module.exports = {
 
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, 'public'),
     },
 
     module: {
@@ -15,14 +15,20 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                use: ['react-hot-loader', 'babel-loader']
-            }
-        ]
+                use: ['react-hot-loader', 'babel-loader'],
+            },
+        ],
+    },
+
+    devServer: {
+        proxy: {
+            '/api': 'http://localhost:3000/',
+        },
     },
 
     devtool: 'cheap-eval-source-map',
-    
+
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '*']
-    }
+        extensions: ['.js', '.jsx', '.json', '*'],
+    },
 };

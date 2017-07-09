@@ -1,4 +1,10 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from '../actions';
+import {
+  ADD_TODO,
+  DELETE_TODO,
+  EDIT_TODO,
+  TOGGLE_TODO,
+  GET_TODOS,
+} from '../actions';
 
 function todoReducer(state = {}, action) {
   switch (action.type) {
@@ -31,6 +37,9 @@ function todoReducer(state = {}, action) {
 
 function reducer(state = [], action) {
   switch (action.type) {
+    case GET_TODOS:
+      return action.todos;
+
     case ADD_TODO:
       return [...state, todoReducer(undefined, action)];
 
