@@ -1,3 +1,4 @@
+export const REQUEST_TODOS = 'REQUEST_TODOS';
 export const GET_TODOS = 'GET_TODOS';
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
@@ -7,10 +8,18 @@ export const EDIT_TODO = 'EDIT_TODO';
 let nextId = 5;
 
 export function getTodos() {
-  return fetch('/api/todos').then(res => res.json()).then(todos => ({
-    type: GET_TODOS,
-    todos,
-  }));
+  return dispatch => {
+    dispatch({
+      type: REQUEST_TODOS,
+    });
+
+    return fetch('/api/todos').then(res => res.json()).then(todos =>
+      dispatch({
+        type: GET_TODOS,
+        todos,
+      })
+    );
+  };
 }
 
 export function addTodo(title) {

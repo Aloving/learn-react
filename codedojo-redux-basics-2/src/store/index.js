@@ -2,6 +2,9 @@ import { createStore } from 'redux';
 
 import reducer from '../reducers';
 
+const store = createStore(reducer);
+const dispatch = store.dispatch;
+
 function addPromiseSupport(store) {
   const dispatch = store.dispatch;
 
@@ -14,8 +17,18 @@ function addPromiseSupport(store) {
   });
 }
 
-const store = createStore(reducer);
+function addThunkSupport(store) {
+  const dispatch = store.dispatch;
 
-store.dispatch = addPromiseSupport(store);
+  return (store.dispatch = action => {
+    if (typeof action === 'function') {
+      return action(dispatch);
+    }
+
+    return dispatch(action);
+  });
+}
+
+store.dispatch = addThunkSupport(store);
 
 export default store;
